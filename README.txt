@@ -1,3 +1,17 @@
+Fare i seguenti file:
+
+psql.uri
+SOF
+postgresql://postgres:postgres@localhost/test
+EOF
+
+secret_key.txt
+SOF
+My_Secret_Key
+EOF
+
+read_my_file.py returns the first line of the file.
+
 1. Fare un database "test".
 sudo su - postgres
 psql
