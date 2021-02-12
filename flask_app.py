@@ -77,8 +77,12 @@ def token_required(f):
 
 @app.route("/login", methods=['GET'])
 def login():
+	auth = None
+	print(request.headers)
+	print(request.data)
+	print(request.authorization)
 	auth = request.authorization
-	print("\n\nauth=\n{}\n\n".format(auth))
+	
 	if not auth or not auth.username or not auth.password:
 		return make_response("Can't verify creds.", 401, {"WWW-Authenticate": "Basic realm='Login required!'"})
 
@@ -87,7 +91,7 @@ def login():
 	if user:
 		if check_password_hash(user.password, auth.password):
 			token = jwt.encode({'public_id': user.public_id,'exp': datetime.datetime.utcnow()+datetime.timedelta(minutes=30)},app.config['SECRET_KEY'],algorithm="HS256")
-			
+			del user
 			return jsonify({'token':token}) #.decode('UTF-8')
 
 	return make_response("Can't verify user.", 401, {"WWW-Authenticate": "Basic realm='Login required!'"})

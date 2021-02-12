@@ -1,3 +1,42 @@
+1. Fare un database "test".
+sudo su - postgres
+psql
+create database test;
+
+2. Fare un virtual environment
+sudo apt-get install python3-pip
+pip3 install virtualenv
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r req.txt --no-index
+
+3. Inizializzare le tabelle:
+python3 manage.py db init
+python3 manage.py db migrate
+python3 manage.py db upgrade
+
+4. Inserire manualmente un utente superuser specificando alla colonna is_admin=True
+
+insert into users(public_id,username,password,is_admin)
+values(
+'42023454-ff29-41b8-bb53-866632dbb215',
+'superuser',
+'sha256$jZjo8bo4$8da964de32888df79efe4bc19f05e0f19ead4c9577a07b2386e52de2a8ab1ba4',
+True);
+
+5. Eseguire l'applicazione
+python3 flask_app.py
+
+6. Esempi di lancio curl
+
+curl http://localhost:5000/login -u "superuser:password"
+
+curl http://localhost:5000/signup/user -d '{"username":"user3","password":"password","org_id":"3","user_access_level":"1"}' -H "x-access-token:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiJhYzI2ZThiOC1kZDBlLTQ0MjMtYTkwOS1kZTE1ZGEwMWU2ZGYiLCJleHAiOjE2MTI5ODE4MTl9.Becr-QbiSLNP5wSbhGtb6IEMeI7M756aDOEFtPDMZiM"
+
+curl http://localhost:5000/warehouse -H "x-access-token:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiJhYzI2ZThiOC1kZDBlLTQ0MjMtYTkwOS1kZTE1ZGEwMWU2ZGYiLCJleHAiOjE2MTI5MTIwNjR9.gv_4Itve10MHW_ZUe_1bFMxLjJvPFsvQofxP0uVpV_E"
+
+
+
 # Esercitazione
 
 ## Scopo
