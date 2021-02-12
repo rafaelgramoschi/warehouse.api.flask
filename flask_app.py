@@ -206,7 +206,7 @@ def user_boxes(current_user,public_id):
 # WAREHOUSE SUPERUSER ONLY
 @app.route("/signup/organization", methods=['POST'])
 @token_required
-def signup(current_user):
+def signup_org(current_user):
 	"""Signup a new user."""
 	
 	"""
@@ -227,7 +227,7 @@ def signup(current_user):
 			
 		db.session.add(new_org)
 		db.session.commit()
-		
+
 		return jsonify({'msg':'user successfully added.'})
 	
 	return jsonify({'error':'no user added: you don\'t have administrative authorization.'})
@@ -267,7 +267,7 @@ def new_unit(current_user):
 # WAREHOUSE SUPERUSER ONLY
 @app.route("/signup/user", methods=['POST'])
 @token_required
-def signup(current_user):
+def signup_user(current_user):
 	"""Signup a new user."""
 	
 	"""

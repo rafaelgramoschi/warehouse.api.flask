@@ -1,0 +1,161 @@
+---
+openapi: 3.0.0
+info:
+  title: Nephila Project - Warehouse API Documentation
+  description: Warehouse API - Create Read Update and Delete the Warehouse's Organizations, Units, Boxes and Users.
+  termsOfService: https://www.nephila.digital/en/jobs/privacy-policy-nephila-candidates/
+  contact:
+    name: Rafael
+    url: https://github.com/rafaelgramoschi
+    email: gramoschi.rafael@gmail.com
+  license:
+    name: MIT License
+    url: https://spdx.org/licenses/MIT.html
+  version: 1.0.0
+servers:
+- url: https://dev.foo.com/v1
+  description: Development Server
+- url: https://prod.foo.com/v1
+  description: Production Server
+security:
+- basicAuth: []
+paths:
+  /signup/user:
+    post:
+      description: SUPERUSER ONLY - signup a new User to an Organization.
+      parameters:
+      - name: x-access-token
+        in: header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ4IjoxMjMsInkiOiJhYmMifQ.FhF2RoZXtug3IlMWPQ8E6uQxhkXp7n7qdTb9QZJoaLM
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body'
+        required: true
+      responses:
+        "200":
+          description: user successfully added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+  /login:
+    get:
+      summary: Login User using Basic Auth, returning a Json Web Token.
+      description: |-
+        User login using Basic Auth, this is just for the exercise's purpose. NOT TO USE in real world scenario since Basic Auth's login is cached by the browser.
+
+        Login with username and password, returning a Json Web Token
+      parameters:
+      - name: username
+        in: query
+        description: The new user username
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: user6789
+      - name: password
+        in: query
+        description: The user password
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: user6789
+      responses:
+        "200":
+          description: Successful Login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+  /user/{public_id}/boxes:
+    get:
+      description: Get a User's list of accessible Boxes.
+      parameters:
+      - name: x-access-token
+        in: header
+        description: Given at Login, it gives authorization
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: public_id
+        in: path
+        description: User public id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: user successfully added.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inline_response_200_2'
+components:
+  schemas:
+    inline_response_200_1:
+      type: object
+      properties:
+        token:
+          type: string
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ4IjoxMjMsInkiOiJhYmMifQ.FhF2RoZXtug3IlMWPQ8E6uQxhkXp7n7qdTb9QZJoaLM
+    inline_response_200:
+      type: object
+      properties:
+        msg:
+          type: string
+          example: user successfully added.
+    inline_response_200_2:
+      type: object
+      properties:
+        org_id:
+          type: integer
+        user_id:
+          type: integer
+          example: 1
+        unit_id:
+          type: integer
+        box_id:
+          type: integer
+        box_access_level:
+          type: integer
+        user_access_level:
+          type: integer
+    body:
+      type: object
+      properties:
+        username:
+          type: string
+          example: user6789
+        password:
+          type: string
+          example: password
+        org_id:
+          type: integer
+          example: 2
+        user_access_level:
+          maximum: 2
+          minimum: 0
+          type: integer
+          example: 0
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

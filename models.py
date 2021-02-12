@@ -1,9 +1,11 @@
+# To make the tables in the "test" database
+# open a python interactive shell and type:
+# >>> from models import db
+# >>> db.create_all()
+
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
-
-#create tables
-#db.create_all()
 
 workcontracts = db.Table(
 	'workcontracts',
@@ -30,14 +32,14 @@ class User(db.Model):
 	# - lazy will give the option to make a custom query (filtering)
 	# instead of giving all the data at once
 	contracts = db.relationship(
-										'Organization',
-										secondary='workcontracts',
-										backref=db.backref(
-															'workers',
-															lazy='dynamic',
-															),
-										cascade="all, delete"
-									)
+									'Organization',
+									secondary='workcontracts',
+									backref=db.backref(
+														'workers',
+														lazy='dynamic',
+														),
+									cascade="all, delete"
+								)
 
 class Organization(db.Model):
 	__tablename__ = 'organizations'
