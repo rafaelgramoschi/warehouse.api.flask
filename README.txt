@@ -53,8 +53,6 @@ curl http://localhost:5000/warehouse -H "x-access-token:eyJ0eXAiOiJKV1QiLCJhbGci
 
 # Esercitazione
 
-## Scopo
-
 Si implementi un backend RESTful che modelli la gestione di un magazzino che affitta spazio a varie organizzazioni.
 
 Il magazzino contiene il materiale di organizzazioni indipendenti, organizzato come segue:
@@ -75,13 +73,7 @@ Le API devono permettere di:
 - listing delle scatole a cui l'utente ha accesso
 - creare / cancellare scatole all'interno di un'unità fino al limite di scatole
 
-## Consegna
-
-La consegna dovrà avvenire preferibilmente tramite repository git privato (possiamo fornirne uno dedicato con accessi per il candidato),
-e dovrà contenere tutto il necessario per fare il setup e la compilazione dell'applicazione (compresa la dichiarazione delle dipendenze),
-ed eventualmente una breve guida di come fare il setup / eseguire l'applicazione, qualora fossero necessarie azioni manuali particolari.
-
-## Implementazione
+# Implementazione
 
 Fornire l'implementazione di:
 
